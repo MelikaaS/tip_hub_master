@@ -1,0 +1,445 @@
+{% extends 'base.html' %}
+<html lang="en">
+{% load static %}
+{% load hitcount_tags %}
+
+
+{% block content %}
+    <body>
+
+
+    <nav class="nav-menu nav-menu-pc  d-none d-md-flex px-4" id="navbar">
+        <li id="" class="mx-3 menu-item"><a href="" class="nav-menu-item ">زبان های برنامه نویسی </a>
+            <ul class="sub-menu">
+                <a href="">جاوا</a>
+                <a href="">پایتون </a>
+                <a href="">آیتم</a>
+                <a href=""> آیتم</a>
+                <a href="">آیتم</a>
+                <a href="">آیتم</a>
+                <a href="">آیتم</a>
+            </ul>
+        </li>
+        <li id="" class="mx-3 menu-item"><a href="" class="nav-menu-item">فریمورک </a>
+            <ul class="sub-menu">
+                <a href="">جنگو</a>
+                <a href="">آیتم</a>
+                <a href="">آیتم</a>
+                <a href="">آیتم</a>
+                <a href="">آیتم</a>
+                <a href="">آیتم</a>
+                <a href="">آیتم</a>
+            </ul>
+        </li>
+        <li id="" class="mx-3 menu-item"><a href="" class="nav-menu-item">طراحی وب</a>
+            <ul class="sub-menu">
+                <a href="">آیتم</a>
+                <a href="">آیتم</a>
+                <a href="">آیتم</a>
+                <a href="">آیتم</a>
+                <a href="">آیتم</a>
+                <a href="">آیتم</a>
+                <a href="">آیتم</a>
+            </ul>
+        </li>
+        <li id="" class="mx-3 menu-item"><a href="" class="nav-menu-item">مهارت های ارتباطی</a>
+            <ul class="sub-menu">
+                <a href="">آیتم</a>
+                <a href="">آیتم</a>
+                <a href="">آیتم</a>
+                <a href="">آیتم</a>
+                <a href="">آیتم</a>
+                <a href="">آیتم</a>
+                <a href="">آیتم</a>
+            </ul>
+        </li>
+    </nav>
+
+    <main>
+
+        <section class="py-5">
+            <div class="container">
+                <div class="d-flex align-items-center justify-content-between mb-3">
+                    <h2 class="title-section">تازه ترین ویدیو ها</h2>
+                    <a href="all-videos.html" class="btn custom-btn">
+                        نمایش همه
+                    </a>
+                </div>
+                <div class="row">
+                    {% for p in post %}
+                        <!-- item -->
+                        <div class="col-md-6 col-lg-4 my-2">
+                            <div class="custom-bg">
+                                <div class="video-card">
+                                    <a href="{% url 'post_details' p.slug %}"
+                                       class="position-relative d-block ">
+                                        <img src="{{ p.image.url }}" alt="" class="img-fluid w-100 h-100">
+                                        <div class="video-play-btn">
+                                            <i class="fa fa-play"></i>
+                                        </div>
+                                        {% for cat in p.category.all %}
+                                            <div class="d-flex align-items-center justify-content-between video-category-time">
+                                                <h6 class="">{{ cat }}</h6>
+                                                <span class="vid-time">5:25</span>
+                                            </div>
+                                        {% endfor %}
+                                        <div class="video-card-details">
+                                            <div>
+                                                <span>{% get_hit_count for p %}</span>
+                                                <i class="fa fa-eye"></i>
+                                            </div>
+                                            <div>
+                                                <span>{{ p.likes.count.all }}</span>
+                                                <i class="fa fa-heart"></i>
+                                            </div>
+                                            <div>
+                                                <span>22</span>
+                                                <i class="fa fa-comment"></i>
+                                            </div>
+                                        </div>
+                                        <div class="article-overlay"></div>
+                                    </a>
+
+                                </div>
+                                <a href="{% url 'post_details' p.slug %}">
+                                    <h5 class="video-card-title m-2">{{ p.text }}</h5>
+                                </a>
+
+                                <div class="my-3 pb-3 mx-2">
+                                    <i class="fa fa-user  ml-1 "></i>
+                                    <span>{{ p.author }}</span>
+                                </div>
+
+                            </div>
+                        </div>
+                        <!-- end item -->
+                    {% endfor %}
+                    <!-- item -->
+                    <div class="col-md-6 col-lg-4 my-2">
+                        <div class="custom-bg">
+                            <div class="video-card">
+                                <a href="video-detail.html" class="position-relative d-block ">
+                                    <img src="{% static 'image/p2.jpg' %}" alt="" class="img-fluid w-100 h-100">
+                                    <div class="video-play-btn">
+                                        <i class="fa fa-play"></i>
+                                    </div>
+                                    <div class="d-flex align-items-center justify-content-between video-category-time">
+                                        <h6 class="">موفقیت</h6>
+                                        <span class="vid-time">5:25</span>
+                                    </div>
+                                    <div class="video-card-details">
+                                        <div>
+                                            <span>22</span>
+                                            <i class="fa fa-eye"></i>
+                                        </div>
+                                        <div>
+                                            <span>22</span>
+                                            <i class="fa fa-heart"></i>
+                                        </div>
+                                        <div>
+                                            <span>22</span>
+                                            <i class="fa fa-comment"></i>
+                                        </div>
+                                    </div>
+                                    <div class="article-overlay"></div>
+                                </a>
+
+                            </div>
+                            <a href="video-detail.html">
+                                <h5 class="video-card-title m-2"> تازه ترین ویدیو ها تازه ترین ویدیو ها تازه ترین ویدیو
+                                    ها تازه ترین ویدیو هاتازه
+                                    ترین ویدیو هاتازه ترین ویدیو هاتازه ترین ویدیو ها</h5>
+                            </a>
+                            <div class="my-3 pb-3 mx-2">
+                                <i class="fa fa-user  ml-1 "></i>
+                                <span>امیرحسین امیری</span>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- end item -->
+                    <!-- item -->
+                    <div class="col-md-6 col-lg-4 my-2">
+                        <div class="custom-bg">
+                            <div class="video-card">
+                                <a href="video-detail.html" class="position-relative d-block ">
+                                    <img src="assets/image/p3.png" alt="" class="img-fluid w-100 h-100">
+                                    <div class="video-play-btn">
+                                        <i class="fa fa-play"></i>
+                                    </div>
+                                    <div class="d-flex align-items-center justify-content-between video-category-time">
+                                        <h6 class="">موفقیت</h6>
+                                        <span class="vid-time">5:25</span>
+                                    </div>
+                                    <div class="video-card-details">
+                                        <div>
+                                            <span>22</span>
+                                            <i class="fa fa-eye"></i>
+                                        </div>
+                                        <div>
+                                            <span>22</span>
+                                            <i class="fa fa-heart"></i>
+                                        </div>
+                                        <div>
+                                            <span>22</span>
+                                            <i class="fa fa-comment"></i>
+                                        </div>
+                                    </div>
+                                    <div class="article-overlay"></div>
+                                </a>
+
+                            </div>
+                            <a href="video-detail.html">
+                                <h5 class="video-card-title m-2"> تازه ترین ویدیو ها تازه ترین ویدیو ها تازه ترین ویدیو
+                                    ها تازه ترین ویدیو هاتازه
+                                    ترین ویدیو هاتازه ترین ویدیو هاتازه ترین ویدیو ها</h5>
+                            </a>
+                            <div class="my-3 pb-3 mx-2">
+                                <i class="fa fa-user  ml-1 "></i>
+                                <span>امیرحسین امیری</span>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- end item -->
+
+
+                </div>
+            </div>
+        </section>
+
+        <section class="py-5">
+            <div class="container">
+                <div class="d-flex align-items-center justify-content-between mb-3">
+                    <h2 class="title-section">تازه ترین ویدیوها </h2>
+                    <a href="all-videos.html" class="btn custom-btn">
+                        نمایش همه
+                    </a>
+                </div>
+                <div class="row">
+                    <!-- item -->
+                    <div class="col-md-6 col-lg-4 my-2">
+                        <div class="custom-bg">
+                            <div class="video-card">
+                                <a href="video-detail.html" class="position-relative d-block ">
+                                    <img src="{% static 'image/p1.jpg' %}" alt="" class="img-fluid w-100 h-100">
+                                    <div class="video-play-btn">
+                                        <i class="fa fa-play"></i>
+                                    </div>
+                                    <div class="d-flex align-items-center justify-content-between video-category-time">
+                                        <h6 class="">موفقیت</h6>
+                                        <span class="vid-time">5:25</span>
+                                    </div>
+                                    <div class="video-card-details">
+                                        <div>
+                                            <span>22</span>
+                                            <i class="fa fa-eye"></i>
+                                        </div>
+                                        <div>
+                                            <span>22</span>
+                                            <i class="fa fa-heart"></i>
+                                        </div>
+                                        <div>
+                                            <span>22</span>
+                                            <i class="fa fa-comment"></i>
+                                        </div>
+                                    </div>
+                                    <div class="article-overlay"></div>
+                                </a>
+
+                            </div>
+                            <a href="video-detail.html">
+                                <h5 class="video-card-title m-2"> تازه ترین ویدیو ها تازه ترین ویدیو ها تازه ترین ویدیو
+                                    ها تازه ترین ویدیو هاتازه
+                                    ترین ویدیو هاتازه ترین ویدیو هاتازه ترین ویدیو ها</h5>
+                            </a>
+                            <div class="my-3 pb-3 mx-2">
+                                <i class="fa fa-user  ml-1 "></i>
+                                <span>امیرحسین امیری</span>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- end item -->
+                    <!-- item -->
+                    <div class="col-md-6 col-lg-4 my-2">
+                        <div class="custom-bg">
+                            <div class="video-card">
+                                <a href="video-detail.html" class="position-relative d-block ">
+                                    <img src="{% static 'image/p2.jpg' %}" alt="" class="img-fluid w-100 h-100">
+                                    <div class="video-play-btn">
+                                        <i class="fa fa-play"></i>
+                                    </div>
+                                    <div class="d-flex align-items-center justify-content-between video-category-time">
+                                        <h6 class="">موفقیت</h6>
+                                        <span class="vid-time">5:25</span>
+                                    </div>
+                                    <div class="video-card-details">
+                                        <div>
+                                            <span>22</span>
+                                            <i class="fa fa-eye"></i>
+                                        </div>
+                                        <div>
+                                            <span>22</span>
+                                            <i class="fa fa-heart"></i>
+                                        </div>
+                                        <div>
+                                            <span>22</span>
+                                            <i class="fa fa-comment"></i>
+                                        </div>
+                                    </div>
+                                    <div class="article-overlay"></div>
+                                </a>
+
+                            </div>
+                            <a href="video-detail.html">
+                                <h5 class="video-card-title m-2"> تازه ترین ویدیو ها تازه ترین ویدیو ها تازه ترین ویدیو
+                                    ها تازه ترین ویدیو هاتازه
+                                    ترین ویدیو هاتازه ترین ویدیو هاتازه ترین ویدیو ها</h5>
+                            </a>
+                            <div class="my-3 pb-3 mx-2">
+                                <i class="fa fa-user  ml-1 "></i>
+                                <span>امیرحسین امیری</span>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- end item -->
+                    <!-- item -->
+                    <div class="col-md-6 col-lg-4 my-2">
+                        <div class="custom-bg">
+                            <div class="video-card">
+                                <a href="video-detail.html" class="position-relative d-block ">
+                                    <img src="{% static 'image/p3.png' %}" alt="" class="img-fluid w-100 h-100">
+                                    <div class="video-play-btn">
+                                        <i class="fa fa-play"></i>
+                                    </div>
+                                    <div class="d-flex align-items-center justify-content-between video-category-time">
+                                        <h6 class="">موفقیت</h6>
+                                        <span class="vid-time">5:25</span>
+                                    </div>
+                                    <div class="video-card-details">
+                                        <div>
+                                            <span>22</span>
+                                            <i class="fa fa-eye"></i>
+                                        </div>
+                                        <div>
+                                            <span>22</span>
+                                            <i class="fa fa-heart"></i>
+                                        </div>
+                                        <div>
+                                            <span>22</span>
+                                            <i class="fa fa-comment"></i>
+                                        </div>
+                                    </div>
+                                    <div class="article-overlay"></div>
+                                </a>
+
+                            </div>
+                            <a href="video-detail.html">
+                                <h5 class="video-card-title m-2"> تازه ترین ویدیو ها تازه ترین ویدیو ها تازه ترین ویدیو
+                                    ها تازه ترین ویدیو هاتازه
+                                    ترین ویدیو هاتازه ترین ویدیو هاتازه ترین ویدیو ها</h5>
+                            </a>
+                            <div class="my-3 pb-3 mx-2">
+                                <i class="fa fa-user  ml-1 "></i>
+                                <span>امیرحسین امیری</span>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- end item -->
+                    <!-- item -->
+                    <div class="col-md-6 col-lg-4 my-2">
+                        <div class="custom-bg">
+                            <div class="video-card">
+                                <a href="video-detail.html" class="position-relative d-block ">
+                                    <img src="{% static 'image/p4.png' %}" alt="" class="img-fluid w-100 h-100">
+                                    <div class="video-play-btn">
+                                        <i class="fa fa-play"></i>
+                                    </div>
+                                    <div class="d-flex align-items-center justify-content-between video-category-time">
+                                        <h6 class="">موفقیت</h6>
+                                        <span class="vid-time">5:25</span>
+                                    </div>
+                                    <div class="video-card-details">
+                                        <div>
+                                            <span>111122</span>
+                                            <i class="fa fa-eye"></i>
+                                        </div>
+                                        <div>
+                                            <span>22</span>
+                                            <i class="fa fa-heart"></i>
+                                        </div>
+                                        <div>
+                                            <span>1122</span>
+                                            <i class="fa fa-comment"></i>
+                                        </div>
+                                    </div>
+                                    <div class="article-overlay"></div>
+                                </a>
+
+                            </div>
+                            <a href="video-detail.html">
+                                <h5 class="video-card-title m-2"> تازه ترین ویدیو ها تازه ترین ویدیو ها تازه ترین ویدیو
+                                    ها تازه ترین ویدیو هاتازه
+                                    ترین ویدیو هاتازه ترین ویدیو هاتازه ترین ویدیو ها</h5>
+                            </a>
+                            <div class="my-3 pb-3 mx-2">
+                                <i class="fa fa-user  ml-1 "></i>
+                                <span>امیرحسین امیری</span>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- end item -->
+                    <!-- item -->
+                    <div class="col-md-6 col-lg-4 my-2">
+                        <div class="custom-bg">
+                            <div class="video-card">
+                                <a href="video-detail.html" class="position-relative d-block ">
+                                    <img src="{% static 'image/p5.png' %}" alt="" class="img-fluid w-100 h-100">
+                                    <div class="video-play-btn">
+                                        <i class="fa fa-play"></i>
+                                    </div>
+                                    <div class="d-flex align-items-center justify-content-between video-category-time">
+                                        <h6 class="">موفقیت</h6>
+                                        <span class="vid-time">5:25</span>
+                                    </div>
+                                    <div class="video-card-details">
+                                        <div>
+                                            <span>22</span>
+                                            <i class="fa fa-eye"></i>
+                                        </div>
+                                        <div>
+                                            <span>22</span>
+                                            <i class="fa fa-heart"></i>
+                                        </div>
+                                        <div>
+                                            <span>22</span>
+                                            <i class="fa fa-comment"></i>
+                                        </div>
+                                    </div>
+                                    <div class="article-overlay"></div>
+                                </a>
+
+                            </div>
+                            <a href="video-detail.html">
+                                <h5 class="video-card-title m-2"> تازه ترین ویدیو ها تازه ترین ویدیو ها تازه ترین ویدیو
+                                    ها تازه ترین ویدیو هاتازه
+                                    ترین ویدیو هاتازه ترین ویدیو هاتازه ترین ویدیو ها</h5>
+                            </a>
+                            <div class="my-3 pb-3 mx-2">
+                                <i class="fa fa-user  ml-1 "></i>
+                                <span>امیرحسین امیری</span>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- end item -->
+
+                </div>
+            </div>
+        </section>
+
+
+    </main>
+
+
+    </body>
+{% endblock %}
+
+</html>

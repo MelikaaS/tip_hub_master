@@ -1,0 +1,255 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load hitcount_tags %}
+{% load humanize %}
+
+<html lang="en">
+{% block content %}
+
+    <body>
+
+
+    <main>
+
+        <section class="py-5">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-8">
+                        <div>
+                            <!-- video -->
+                            <div class="video-player-box">
+                                <div class="video-icon">
+                                    <div class="btn video-btn" onclick="playvideo()" id="videobtn">
+                                        <img src="{% static 'image/play-video-btn.png' %}" alt="">
+                                    </div>
+                                </div>
+                                <div class="video">
+                                    <video width="100%" id="myVideo" autoplay>
+                                        <source src="{{ post.video.url }}" type="video/mp4">
+                                    </video>
+                                    <img src="{% static 'image/p2.jpg' %}" width="100%" height="100%"
+                                         class="position-absolute video-poster" alt="">
+
+                                    <div class="video-overlay"></div>
+                                    <div class="video-description px-2 text-white">
+
+                                        <p> 35 دقیقه</p>
+                                    </div>
+                                    <h5 class="close-btn" onclick="stopPlayer()">X</h5>
+                                </div>
+                            </div>
+                            <!-- end video -->
+                            <!-- title -->
+                            <h3 class="video-title my-3">{{ post.headline }}
+                            </h3>
+                            <div class="d-flex align-items-center justify-content-between border-bottom pb-3">
+                                <p class="color78">{{ post.published }}</p>
+                                <div class="d-flex align-items-center view-like">
+                                    <div class="mx-3">
+                                        <span>{% get_hit_count for post %}</span>
+                                        <i class="fa fa-eye"></i>
+                                    </div>
+                                    <div>
+
+                                        {% if is_liked %}
+                                            <a onclick="like('{{ post.slug }}', '{{ post.id }}')"><i id="like"
+                                                                                                     class="fa fa-heart"
+                                                                                                     type='button'
+                                                                                                     aria-hidden="true"></i></a>
+                                            <span id="count">{{ post.likes.count.all }}</span>
+                                        {% else %}
+                                            <a onclick="like('{{ post.slug }}', '{{ post.id }}')"><i id="like"
+                                                                                                     class="fa fa-heart-o"
+                                                                                                     type='button'
+                                                                                                     aria-hidden="true"></i></a>
+                                            <span id="count">{{ post.likes.count.all }}</span>
+                                        {% endif %}
+
+                                        <!--  -->
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+                            <!-- description -->
+                            <div class="border-bottom pb-3">
+                                <h4 class="my-3">درباره فیلم</h4>
+                                <p class="color78">{{ post.text }}</p>
+
+                                <div class="labels">
+                                    <h4 class="my-3">برچسب ها</h4>
+                                    {% for cat in post.category.all %}
+                                        <ul id='ul_inline_category' class="d-flex align-items-center">
+
+                                            <li><a href="#" title="">#{{ cat }}</a></li>
+
+
+                                        </ul>
+                                    {% endfor %}
+                                </div>
+
+                            </div>
+                            <!-- end des -->
+
+                            <!-- comments -->
+                            <div>
+
+
+                                <div class="py-3">
+                                    <span>{{ post.comments.count }}</span>
+                                    <span>نظر</span>
+                                </div>
+
+
+
+
+                                {% if request.user.is_authenticated %}
+                                    <form action="" method="post">
+                                        {% csrf_token %}
+                                        <input type="hidden" id="parent_id" name="parent_id">
+                                        <textarea class="w-100 p-2 comment-area" name="body" id="body" cols="30"
+                                                  rows="10"
+                                                  placeholder="دیدگاه خود را بنویسید"></textarea>
+                                        <div class="d-flex align-items-center justify-content-end pt-3">
+                                            <button class="btn custom-btn">ارسال نظر</button>
+                                        </div>
+                                    </form>
+                                {% else %}
+                                    <a href="{% url 'login' %}"><span>برای ارسال نظر لفا وارد شوید.</span></a>
+                                {% endif %}
+
+                                {% for comment in post.comments.all %}
+                                    {% if comment.parent == None %}
+                                        <!-- comment -->
+                                        <div class="comment my-3 p-2">
+                                            <div class=" d-flex align-items-center justify-content-between">
+                                                <div class="d-flex align-items-center justify-content-center">
+                                                    <img src="{% static 'image/sutdent-prof.png' %}" alt="student"
+                                                         class="user-profile">
+                                                    <p class="user-name pr-2">{{ comment.user.username }}</p>
+                                                </div>
+
+                                                <p class="comment-date-time">{{ comment.created_at|naturaltime }}</p>
+                                            </div>
+                                            <p class="px-4 py-2 comment-text text-justify">{{ comment.body }}</p>
+
+                                            <div class="d-flex align-items-center justify-content-end reply"
+                                                 type='button'>
+                                                <i class="fa fa-reply"></i>
+                                                <button onclick="set_value({{ comment.id }})" class="btn"><p>پاسخ به این
+                                                    نظر</p></button>
+                                            </div>
+                                        </div>
+                                        <!-- end comment -->
+
+                                        <!-- reply -->
+                                        {% for reply in comment.replies.all %}
+                                            <div class="comment my-3 p-2 comment-child">
+                                                <div class=" d-flex align-items-center justify-content-between">
+                                                    <div class="d-flex align-items-center justify-content-center">
+                                                        <img src="{% static 'image/sutdent-prof.png' %}" alt="student"
+                                                             class="user-profile">
+                                                        <p class="user-name pr-2">{{ reply.user.username }}</p>
+                                                    </div>
+
+                                                    <p class="comment-date-time"> {{ reply.created_at|naturaltime }}</p>
+                                                </div>
+                                                <p class="px-4 py-2 comment-text text-justify">{{ reply.body }}</p>
+
+                                            </div>
+
+                                        {% endfor %}
+                                    {% endif %}
+
+                                {% endfor %}
+
+                                <!-- end comment -->
+                            </div>
+                            <!-- end comments -->
+
+                        </div>
+                    </div>
+                    <!-- main -->
+
+
+                        <!-- side -->
+                        <aside class="col-md-4 ">
+                            <div class="custom-bg p-2 teacher-card">
+                                <div class="border-bottom py-3 text-center">
+                                    <h4>درباره استاد</h4>
+                                </div>
+                                <div class="d-flex align-items-center py-3">
+                                    <img src="{% static 'image/sutdent-prof.png' %}" alt="student"
+                                         class="teacher-profile">
+                                    <p class="user-name pr-2">{{ post.author}} </p>
+                                </div>
+                                <p class="color78 teacher-description py-3">{{ post.author.about_me }}</p>
+
+                                <div class="teacher-social-media d-flex align-items-center justify-content-center flex-wrap">
+                                    <a href=""> <i class="fa fa-instagram"></i></a>
+                                    <a href=""> <i class="fa fa-github"></i></a>
+                                    <a href=""> <i class="fa fa-linkedin"></i></a>
+                                    <a href=""> <i class="fa fa-twitter"></i></a>
+                                </div>
+                            </div>
+                        </aside>
+
+                        <!-- end side -->
+
+
+
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+
+    <script>
+        // video-player
+        const videobtn = document.querySelector('.video-btn');
+        const video = document.querySelector('.video');
+        const videotag = document.querySelector('video')
+        const videoDescription = document.querySelector('.video-description')
+        const closeBtn = document.querySelector('.close-btn')
+        const videoPoster = document.querySelector('.video-poster')
+        const videoOverlay = document.querySelector('.video-overlay')
+
+        function stopPlayer() {
+            videobtn.style.display = "block";
+            closeBtn.style.display = 'none';
+            videoPoster.style.display = 'inline'
+            video.style.zIndex = '-1'
+            videotag.pause()
+            videotag.style.borderRadius = '20px'
+            videoDescription.style.display = 'flex'
+            videotag.controls = false
+            videotag.style.borderRadius = '15px'
+            videoOverlay.style.display = 'block'
+        };
+
+        function playvideo() {
+            videobtn.style.display = "none";
+            video.style.zIndex = '22222'
+            videotag.autoplay = true
+            videotag.play()
+            videotag.style.borderRadius = '20px'
+            videotag.controls = true
+            videoDescription.style.display = 'none'
+            closeBtn.style.display = 'block'
+            videoPoster.style.display = 'none'
+            videoOverlay.style.display = 'none'
+        }
+    </script>
+    <script>
+        function set_value(id) {
+            document.getElementById('parent_id').value = id;
+            window.location.href = '#body'
+
+        }
+    </script>
+
+    </body>
+{% endblock %}
+</html>

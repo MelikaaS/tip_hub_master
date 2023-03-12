@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<body>
+<script>
+    let checkboxInput = document.querySelector('.checkbox-input')
+    let passwordInput = document.querySelector('.password-input')
+    let isHide = true
+    checkboxInput.addEventListener('click', () => {
+        if (isHide) {
+            passwordInput.type = 'text'
+            isHide = false
+        } else {
+            passwordInput.type = 'password'
+            isHide = true
+        }
+    })
+
+</script>
+</body>
+</html>

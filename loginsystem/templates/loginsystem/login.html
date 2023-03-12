@@ -1,0 +1,150 @@
+{% extends 'base.html' %}
+{#{% load socialaccount %}#}
+<html lang="en">
+{% load static %}
+
+
+{% block content %}
+    <body>
+
+    <!-- top-header -->
+
+
+    <nav class="nav-menu nav-menu-pc  d-none d-md-flex px-4" id="navbar">
+        <li id="" class="mx-3 menu-item"><a href="" class="nav-menu-item ">زبان های برنامه نویسی </a>
+            <ul class="sub-menu">
+                <a href="">جاوا</a>
+                <a href="">پایتون </a>
+                <a href="">آیتم</a>
+                <a href=""> آیتم</a>
+                <a href="">آیتم</a>
+                <a href="">آیتم</a>
+                <a href="">آیتم</a>
+            </ul>
+        </li>
+        <li id="" class="mx-3 menu-item"><a href="" class="nav-menu-item">فریمورک </a>
+            <ul class="sub-menu">
+                <a href="">جنگو</a>
+                <a href="">آیتم</a>
+                <a href="">آیتم</a>
+                <a href="">آیتم</a>
+                <a href="">آیتم</a>
+                <a href="">آیتم</a>
+                <a href="">آیتم</a>
+            </ul>
+        </li>
+        <li id="" class="mx-3 menu-item"><a href="" class="nav-menu-item">طراحی وب</a>
+            <ul class="sub-menu">
+                <a href="">آیتم</a>
+                <a href="">آیتم</a>
+                <a href="">آیتم</a>
+                <a href="">آیتم</a>
+                <a href="">آیتم</a>
+                <a href="">آیتم</a>
+                <a href="">آیتم</a>
+            </ul>
+        </li>
+        <li id="" class="mx-3 menu-item"><a href="" class="nav-menu-item">مهارت های ارتباطی</a>
+            <ul class="sub-menu">
+                <a href="">آیتم</a>
+                <a href="">آیتم</a>
+                <a href="">آیتم</a>
+                <a href="">آیتم</a>
+                <a href="">آیتم</a>
+                <a href="">آیتم</a>
+                <a href="">آیتم</a>
+            </ul>
+        </li>
+    </nav>
+
+    <main>
+        <section class="py-5">
+            <div class="container">
+                <div class="row d-flex justify-content-center">
+                    <div class="col-sm-9 col-md-7 col-lg-5">
+                        <div class="custom-bg p-2">
+
+                            <div class="my-3 text-center">ورود به حساب</div>
+                            <form class="" method="post">
+                                {% csrf_token %}
+                                {{ form.non_field_errors }}
+
+                                <div class="field">
+                                    <i class="fa fa-envelope"></i>
+                                    <input class="email-input" type="email" name="username" placeholder="پست الکترونیک"
+                                           dir="ltr"
+                                           maxlength="50" required="">
+
+
+                                </div>
+
+                                <div class="field">
+                                    <i class="fa fa-lock"></i>
+                                    <input class="password-input" dir="ltr" type="password" name="password"
+                                           placeholder="گذرواژه">
+
+                                </div>
+                                <div class="mr-1 d-flex justify-content-between">
+                                    <div>
+                                        <input type="checkbox" class="checkbox-input" tabindex="0">
+                                        <label class="small">نمایش گذرواژه</label>
+                                    </div>
+                                    <div>
+                                        <a href="{% url 'forgotPassword' %}" class="small">رمز عبور خود را
+                                            فراموش کرده اید؟</a>
+                                    </div>
+
+                                </div>
+
+                                <div class="my-3">
+
+                                    <button class="btn custom-btn w-100">ورود</button>
+                                </div>
+                                <div class="pb-2 border-bottom">
+                                    <span class="small">حساب کاربری ندارید؟</span>
+                                    <a href="register.html" class="small">
+                                        عضویت در سایت
+                                    </a>
+                                </div>
+                            </form>
+
+
+                            <div class="">
+                                <p class="small text-center my-3">ورود از طریق حساب‌های کاربری دیگر</p>
+                                <div class="">
+
+                                    <div class="social-account">
+
+                                        <a title="Google" class="" href="">
+                                            <img height="24" src="{% static 'image/google.svg' %}"
+                                                 class="d-block m-auto">
+                                        </a>
+
+                                        <a title="GitHub" class="" href="">
+                                            <img height="24" src="{% static 'image/github.svg' %}"
+                                                 class="d-block m-auto">
+                                        </a>
+
+                                        <a title="LinkedIn" class="" href="">
+                                            <img height="24" src="{% static 'image/linkedin.svg' %}"
+                                                 class="d-block m-auto">
+                                        </a>
+
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+
+    {% include 'includes/login_footer.html' %}
+    </body>
+{% endblock %}
+</html>

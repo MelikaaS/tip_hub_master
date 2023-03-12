@@ -1,0 +1,235 @@
+{% extends 'base.html' %}
+{% load static %}
+<html lang="en">
+
+{% block content %}
+
+
+    <body>
+
+
+    <nav class="nav-menu nav-menu-pc  d-none d-md-flex px-4" id="navbar">
+        <li id="" class="mx-3 menu-item"><a href="" class="nav-menu-item ">زبان های برنامه نویسی </a>
+            <ul class="sub-menu">
+                <a href="">جاوا</a>
+                <a href="">پایتون </a>
+                <a href="">آیتم</a>
+                <a href=""> آیتم</a>
+                <a href="">آیتم</a>
+                <a href="">آیتم</a>
+                <a href="">آیتم</a>
+            </ul>
+        </li>
+        <li id="" class="mx-3 menu-item"><a href="" class="nav-menu-item">فریمورک </a>
+            <ul class="sub-menu">
+                <a href="">جنگو</a>
+                <a href="">آیتم</a>
+                <a href="">آیتم</a>
+                <a href="">آیتم</a>
+                <a href="">آیتم</a>
+                <a href="">آیتم</a>
+                <a href="">آیتم</a>
+            </ul>
+        </li>
+        <li id="" class="mx-3 menu-item"><a href="" class="nav-menu-item">طراحی وب</a>
+            <ul class="sub-menu">
+                <a href="">آیتم</a>
+                <a href="">آیتم</a>
+                <a href="">آیتم</a>
+                <a href="">آیتم</a>
+                <a href="">آیتم</a>
+                <a href="">آیتم</a>
+                <a href="">آیتم</a>
+            </ul>
+        </li>
+        <li id="" class="mx-3 menu-item"><a href="" class="nav-menu-item">مهارت های ارتباطی</a>
+            <ul class="sub-menu">
+                <a href="">آیتم</a>
+                <a href="">آیتم</a>
+                <a href="">آیتم</a>
+                <a href="">آیتم</a>
+                <a href="">آیتم</a>
+                <a href="">آیتم</a>
+                <a href="">آیتم</a>
+            </ul>
+        </li>
+    </nav>
+
+    <main>
+
+        <section class="py-5">
+            <div class="container">
+                <div class="row d-flex justify-content-center">
+                    <div class="col-sm-9 col-md-11 col-lg-10">
+                        <div class="user-panel custom-bg">
+
+
+                            <!-- *******************-->
+                            <div class="user-panel-profile" id="id_image_container">
+                                <img id="id_profile_image_display" src="{{ user_form.initial.image.url }}" alt="">
+                            </div>
+
+
+                            <div class="change-profile-btn" id="id_middle_container">
+                                {#                                <input id='fileid' type='file' hidden/>#}
+                                <button class="btn custom-btn" id="id_text">تغییر عکس پروفایل
+                                </button>
+                            </div>
+
+
+                            <form action="" method="post" enctype="multipart/form-data" id="update_form">
+                                {% csrf_token %}
+
+                                {% for field in user_form %}
+                                    <p>
+                                        {% for error in field.errors %}
+                                            <p style="color: red">{{ error }}</p>
+                                        {% endfor %}
+                                    </p>
+                                {% endfor %}
+
+                                {% if user_form.non_field_errors %}
+                                    <div style="color: red">
+                                        <p>{{ user_form.non_field_errors }}</p>
+                                    </div>
+                                {% endif %}
+
+
+                                {% if messages %}
+                                    {% for message in messages %}
+                                        <div class="alert alert-{{ message.tags }}">
+                                            {{ message }}
+                                        </div>
+                                    {% endfor %}
+                                {% endif %}
+
+
+                                <div class="user-panel-box">
+                                    <!--  image input -->
+                                    <input class="d-none" type="file" name="image" id="id_profile_image"
+                                           onchange="readURL(this)">
+
+                                    <!-- item -->
+                                    <div class="user-panel-field">
+                                        <i class="fa fa-user"></i>
+                                        {{ user_form.fullname.errors }}
+
+                                        <input class="email-input" type="text" placeholder="نام و نام خانوادگی"
+                                               name="fullname" required="">
+                                    </div>
+                                    <!-- item -->
+                                    <div class="user-panel-field">
+                                        <i class="fa fa-envelope"></i>
+                                        {{ user_form.email.errors }}
+                                        <input class="email-input" type="email" placeholder="پست الکترونیک" dir="ltr"
+                                               maxlength="50" name="email"
+                                               required="">
+                                    </div>
+                                    <!-- item -->
+                                    <div class="user-panel-field">
+                                        <i class="fa fa-phone"></i>
+                                        {{ user_form.phone_number.errors }}
+
+                                        <input class="email-input" type="tel" placeholder="شماره تلفن"
+                                               name="phone_number"
+                                               required="">
+                                    </div>
+                                    <!-- item -->
+                                    <div class="user-panel-field">
+                                        <i class="fa fa-user-circle"></i>
+                                        {{ user_form.username.errors }}
+
+                                        <input class="" type="text" placeholder="نام کاربری" name="username"
+                                               required="">
+                                    </div>
+
+                                </div>
+                            </form>
+
+                            <div class="d-flex justify-content-center mt-3 ">
+                                <button type="submit" form="update_form" class="btn custom-btn w-50">اعمال تغییرات
+                                </button>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+<!-- image upload -->
+
+<script type="text/javascript">
+        var cropper;
+        var imageFile;
+        var base64ImageString;
+        var cropX;
+        var cropX;
+        var cropWidth;
+        var cropHeight;
+        enableImageOverlay()
+
+        function enableImageOverlay() {
+            var text = document.getElementById("id_text")
+            var profileImage = document.getElementById("id_profile_image")
+            var middleContainer = document.getElementById("id_middle_container")
+            var imageContainer = document.getElementById("id_image_container")
+            middleContainer.addEventListener("click", function (event) {
+                document.getElementById('id_profile_image').click();
+            });
+        }
+
+        function disableImageOverlay() {
+            var profileImage = document.getElementById("id_profile_image_display")
+            var middleContainer = document.getElementById("id_middle_container")
+            var imageContainer = document.getElementById("id_image_container")
+            var text = document.getElementById("id_text")
+            document.getElementById('id_image_container').removeEventListener("click", function (event) {
+                event.preventDefault();
+                // do nothing
+            });
+            document.getElementById('id_profile_image').addEventListener("click", function (event) {
+                event.preventDefault();
+                // do nothing
+            });
+        }
+
+        /*
+        Called when a new image is selected from file chooser dialog
+    */
+        function readURL(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    disableImageOverlay()
+                    var image = e.target.result
+                    var imageField = document.getElementById('id_profile_image_display')
+                    imageField.src = image
+
+                };
+                reader.readAsDataURL(input.files[0]);
+            }
+        };
+
+
+    </script>
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"
+            integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+            crossorigin="anonymous"></script>
+    <script src="{% static 'components/bootstrap/bootstrap.bundle.js' %}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+            integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
+            crossorigin="anonymous"></script>
+    <script src="{% static 'components/owl-carousel/owl.carousel.min.js' %}"></script>
+    <script src="{% static 'js/script.js' %}"></script>
+    <script>
+
+    </script>
+
+    </body>
+{% endblock %}
+</html>
